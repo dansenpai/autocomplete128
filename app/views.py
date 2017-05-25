@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from .models import Player
 from .forms import FormPlayer
 from django.db.models import Q
+import requests
 import json
 import random
 
@@ -17,8 +18,8 @@ class PlayersList(View):
     query = Q()
     if request.GET.get('term', False):
         query = Q(name__icontains=request.GET['term'])
-    players = Player.objects.filter(query)
-    paginator = Paginator(players, 100)
+    players = Player.objects.filter(query).order_by('rank_position')
+    paginator = Paginator(players, 5)
     page = int(request.GET.get('page', 1))
 
     try:
@@ -38,34 +39,30 @@ class PlayersList(View):
 
 class PlayerCreate(View):
   form_class = FormPlayer
+  form_name = "Cadastrar Player"
   template_name = 'app/player_form.html'
 
   def get(self, request, *args, **kwargs):
       initial = {}
       try:
-          r = requests.get('http://api.randomuser.me/')
-          data = json.loads(r.text)
-          data = data['results'][0]
-          initial = {
-              'name': "%s %s" % (
-                  data['name']['first'], data['name']['last']), 
-               'rank_position': random.randrange(0, 2000)}
+        r = requests.get('http://api.randomuser.me/')
+        data = json.loads(r.text)
+        data = data['results'][0]
+        initial = { 'name': "%s %s" % (data['name']['first'], data['name']['last']), 
+                    'rank_position': random.randrange(0, 2000)}
       except Exception as e:
-          print(e)
+        print(e)
       form = self.form_class(initial=initial)
-      return render(
-          request, self.template_name,
-          {'form': form, 'name_form': 'Novo Player'})
+      return render(request, self.template_name, {'form': form, 'form_name': self.form_name })
 
   def post(self, request, *args, **kwargs):
       form = self.form_class(request.POST)
       if form.is_valid():
-          data = form.cleaned_data
-          player = Player(name=data['name'], rank_position=data['rank_position'])
-          player.save()
-          return HttpResponseRedirect('/?st=2')
-
-      return render( request, self.template_name, {'form': form, 'name_form': 'Cadastrar Player'})
+        data = form.cleaned_data
+        player = Player(name=data['name'], rank_position=data['rank_position'])
+        player.save()
+        return HttpResponseRedirect('/')
+      return render( request, self.template_name, {'form': form, 'form_name': self.form_name })
 
 class PlayerUpdate(View):
   template_name = 'app/player_form.html'

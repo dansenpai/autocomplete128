@@ -34,4 +34,30 @@
       {% endfor %}
     </tbody>
   </table>
+
+  <div class='ui pagination menu'>
+    {% if actual < 2 %}
+      <a href='#' class="disabled item">
+        <i class="icon chevron left"></i>
+      </a>
+    {% else %}
+      <a href="/?page={{prev}}" class="item">
+        <i class="icon chevron left"></i>
+      </a>
+    {% endif %}
+    
+    {% for page in list_pages %}
+        <a class="item {%  if actual == page %} active {% endif %}"  href="/?page={{page}}">{{page}}</a>
+    {% endfor %}
+    
+    {% if actual >= total or total == 1 %}
+      <a href="#" aria-label="Next" class="item disabled">
+        <i class="icon chevron right"></i>
+      </a>
+    {% else %}
+      <a href="/?page={{next}}" class="item" aria-label="Next">
+        <i class="icon chevron right"></i>
+      </a>
+    {% endif %}
+  </div>
 {% endblock content %}

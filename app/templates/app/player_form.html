@@ -2,11 +2,10 @@
 
 {% block content%}
   <h1>{{ form_name }}</h1>
-  
   <form method="POST" class="ui form">
     {% csrf_token %}
     {{ form.as_p}}
+    <a href="/" class="ui button">Voltar</a>
     <button type="submit" class="ui button blue">Salvar</button>
   </form>
-  
 {% endblock content %}
