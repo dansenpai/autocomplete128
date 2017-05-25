@@ -90,14 +90,9 @@ class PlayerUpdate(View):
 
     return render( request, self.template_name, {'form': form, 'form_name': form_name })
 
-class PlayerDelete(View):
-  template_name = 'app/confirm_delete.html'
-
-  def get(self, request, *args,**kwargs):
-    return render(request, self.template_name, {})
-
-  def get(self, request, *args,**kwargs):
-    return render(request, self.template_name, {})
+class PlayerDelete(DeleteView):
+  model = Player
+  success_url = '/'
 
 class AutoComplete(View):
   def get(self, request, *args,**kwargs):

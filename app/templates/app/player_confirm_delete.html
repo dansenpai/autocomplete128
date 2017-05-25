@@ -1,0 +1,18 @@
+{% extends 'app/shared/base.html' %}
+
+{% block content%}
+  <div class="ui segment">
+    <h3 class="header">Você tem certeza? </h3>
+    <span>
+      Deseja deletar {{ object }}
+    </span>
+    <form action="" method="post" class="ui form">
+      {% csrf_token %}
+
+      <div class="footer">
+        <input class="ui mini button " type="button" value="Cancelar" onclick="window.history.go(-1);"/>
+        <input class="ui mini red button" type="submit" value="Confirmar"/>
+      </div>
+    </form>
+  </div>
+{% endblock content %}

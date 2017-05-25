@@ -25,7 +25,7 @@
             <i class="icon edit"></i>
             Editar
           </a>
-          <a href="" class="ui labeled icon button mini red">
+          <a href="{% url 'app:player_delete' player.id  %}" class="ui labeled icon button mini red">
             <i class="icon remove"></i>
             Remover
           </a>
@@ -51,7 +51,7 @@
     {% endfor %}
     
     {% if actual >= total or total == 1 %}
-      <a href="#" aria-label="Next" class="item disabled">
+      <a href="#" aria-lakbel="Next" class="item disabled">
         <i class="icon chevron right"></i>
       </a>
     {% else %}
