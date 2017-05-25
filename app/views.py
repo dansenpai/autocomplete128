@@ -64,16 +64,31 @@ class PlayerCreate(View):
         return HttpResponseRedirect('/')
       return render( request, self.template_name, {'form': form, 'form_name': self.form_name })
 
-
 class PlayerDetail(DetailView):
   context_object_name = 'player'
   queryset = Player.objects.all()
 
 class PlayerUpdate(View):
+  form_class = FormPlayer
+  form_name = "Editar player"
   template_name = 'app/player_form.html'
 
   def get(self, request, *args,**kwargs):
-    return render(request, self.template_name, {})
+    self.initial = get_object_or_404(Player, pk=kwargs['pk'])
+    form = self.form_class(initial=self.initial.__dict__)
+    return render(request, self.template_name, {'form': form, 'form_name': self.form_name })
+
+  def post(self, request, *args, **kwargs):
+    self.player = get_object_or_404(Player, pk=kwargs['pk'])
+    form = self.form_class(request.POST)
+    if form.is_valid():
+      data = form.cleaned_data
+      self.player.name = data['name']
+      self.player.age = data['rank_position']
+      self.player.save()
+      return HttpResponseRedirect('/')
+
+    return render( request, self.template_name, {'form': form, 'form_name': form_name })
 
 class PlayerDelete(View):
   template_name = 'app/confirm_delete.html'
