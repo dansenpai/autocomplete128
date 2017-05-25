@@ -19,7 +19,7 @@ class PlayersList(View):
     if request.GET.get('term', False):
         query = Q(name__icontains=request.GET['term'])
     players = Player.objects.filter(query).order_by('rank_position')
-    paginator = Paginator(players, 5)
+    paginator = Paginator(players, 100)
     page = int(request.GET.get('page', 1))
 
     try:
