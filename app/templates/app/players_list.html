@@ -1,5 +1,37 @@
 {% extends 'app/shared/base.html' %}
-
 {% block content%}
   <h1>Player list</h1>
+  <table class="ui table">
+    <thead>
+      <tr>
+        <th>Ranking</th>
+        <th>Nome</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for player in players %}
+      <tr>
+        <td>
+          <span class="ui circular label">{{ player.rank_position }}</span>
+        </td>
+        <td> {{ player.name }}</td>
+        <td colspan="3">
+          <a href="" class="ui labeled icon button mini teal">
+            <i class="icon eye"></i> 
+            Visualizar
+          </a>
+          <a href="" class="ui labeled icon button mini orange">
+            <i class="icon edit"></i>
+            Editar
+          </a>
+          <a href="" class="ui labeled icon button mini red">
+            <i class="icon remove"></i>
+            Remover
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock content %}
