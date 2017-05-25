@@ -2,6 +2,8 @@ from django.conf.urls import url
 from .views import PlayersList, PlayerCreate, PlayerUpdate, \
   PlayerDetail, PlayerDelete, AutoComplete
 
+app_name = "app"
+
 urlpatterns = [
   url(r'^$', PlayersList.as_view(), name='players_list' ),
   url(r'^player/new/$', PlayerCreate.as_view(), name='player_create'),

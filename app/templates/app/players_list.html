@@ -17,7 +17,7 @@
         </td>
         <td> {{ player.name }}</td>
         <td colspan="3">
-          <a href="" class="ui labeled icon button mini teal">
+          <a href="{% url 'app:player_detail' player.id %}" class="ui labeled icon button mini teal">
             <i class="icon eye"></i> 
             Visualizar
           </a>

@@ -64,6 +64,11 @@ class PlayerCreate(View):
         return HttpResponseRedirect('/')
       return render( request, self.template_name, {'form': form, 'form_name': self.form_name })
 
+
+class PlayerDetail(DetailView):
+  context_object_name = 'player'
+  queryset = Player.objects.all()
+
 class PlayerUpdate(View):
   template_name = 'app/player_form.html'
 
@@ -76,9 +81,6 @@ class PlayerDelete(View):
   def get(self, request, *args,**kwargs):
     return render(request, self.template_name, {})
 
-class PlayerDetail(View):
-  template_name = 'app/player_detail.html'
-  
   def get(self, request, *args,**kwargs):
     return render(request, self.template_name, {})
 
