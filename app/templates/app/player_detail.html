@@ -6,17 +6,17 @@
     <h1 >Nome: {{ player.name }}</h1>
     <h3 class="description">Posição: {{ player.rank_position }} º</h3>
   
-    <a href="#" class="ui labeled icon mini button gray">
+    <a href="/" class="ui labeled icon mini button gray">
       <i class="icon chevron left"></i>
       Cancelar
     </a>
 
-    <a href="#" class="ui labeled icon mini button orange">
+    <a href="{% url 'app:player_update' player.id %}" class="ui labeled icon mini button orange">
       <i class="icon edit"></i>
       Editar
     </a>
 
-    <a href="#" class="ui labeled icon mini button red">
+    <a href="{% url 'app:player_delete' player.id %}" class="ui labeled icon mini button red">
       <i class="icon remove"></i>
       Deletar
     </a>

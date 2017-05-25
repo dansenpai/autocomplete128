@@ -96,4 +96,11 @@ class PlayerDelete(DeleteView):
 
 class AutoComplete(View):
   def get(self, request, *args,**kwargs):
+    query = Q()
+    if request.GET.get('term', False):
+      query = Q(name__icontains=request.GET['term'])
+    players = Player.objects.filter(query)
+    data = [{'id': player.id, 'name': player.name, 'rank_position': player.rank_position} for player in players]
+    mimetype = "application/json;charset=UTF-8"
+    js = json.dumps({'results': data}, ensure_ascii=False).encode('utf8')
     return HttpResponse(js, mimetype)
