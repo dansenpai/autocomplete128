@@ -84,7 +84,7 @@ class PlayerUpdate(View):
     if form.is_valid():
       data = form.cleaned_data
       self.player.name = data['name']
-      self.player.age = data['rank_position']
+      self.player.rank_position = data['rank_position']
       self.player.save()
       return HttpResponseRedirect('/')
 
